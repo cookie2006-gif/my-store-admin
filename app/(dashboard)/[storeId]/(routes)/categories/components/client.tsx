@@ -32,9 +32,9 @@ export default function CategoryClient({ data }: CategoryClientProps) {
       <Separator />
       <DataTable searchKey="name" columns={columns} data={data} />
 
-      <Heading title="API" description="API calls for categories" />
+      {/* <Heading title="API" description="API calls for categories" />
       <Separator />
-      <ApiList entityName="categories" entityNameId="categoryId" />
+      <ApiList entityName="categories" entityNameId="categoryId" /> */}
     </>
   );
 }

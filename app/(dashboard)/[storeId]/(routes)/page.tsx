@@ -18,6 +18,7 @@ interface DashboardOverviewProps {
 export default async function DashboardOverview({
   params,
 }: DashboardOverviewProps) {
+  
   const totalRevenue = await getTotalRevenue(params.storeId);
   const totalSales = await getTotalSales(params.storeId);
   const totalProduct = await getTotalProducts(params.storeId);
@@ -32,6 +33,7 @@ export default async function DashboardOverview({
   const totalRevenueByOrderStatus = await getOrderStatusTotalRevenue(
     params.storeId
   );
+
   return (
     <div className="flex-col">
       <div className="flex-1 space-y-4 p-8 pt-6">

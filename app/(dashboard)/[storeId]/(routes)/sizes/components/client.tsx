@@ -29,10 +29,10 @@ export default function SizeClient({ data }: SizeClientProps) {
       </div>
       <Separator />
       <DataTable searchKey="name" columns={columns} data={data} />
-
+{/* 
       <Heading title="API" description="API calls for sizes" />
       <Separator />
-      <ApiList entityName="sizes" entityNameId="sizeId" />
+      <ApiList entityName="sizes" entityNameId="sizeId" /> */}
     </>
   );
 }

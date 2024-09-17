@@ -14,7 +14,6 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
-import useOrigin from "@/hooks/use-origin";
 import { storage } from "@/lib/firebase";
 import { Billboards } from "@/types-db";
 import { zodResolver } from "@hookform/resolvers/zod";

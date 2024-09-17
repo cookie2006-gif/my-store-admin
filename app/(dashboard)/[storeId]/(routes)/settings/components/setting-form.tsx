@@ -124,12 +124,12 @@ export default function SettingForm({ initialData }: SettingFormProps) {
           </Button>
         </form>
       </Form>
-      <Separator />
+      {/* <Separator />
       <ApiAlert
         title="NEXT_PUBLIC_API_URL"
         description={`${origin}/api/${params.storeId}`}
         variant="public"
-      />
+      /> */}
     </>
   );
 }

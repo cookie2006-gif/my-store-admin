@@ -30,9 +30,9 @@ export default function ProductClient({ data }: ProductClientProps) {
       <Separator />
       <DataTable searchKey="name" columns={columns} data={data} />
 
-      <Heading title="API" description="API calls for products" />
+      {/* <Heading title="API" description="API calls for products" />
       <Separator />
-      <ApiList entityName="products" entityNameId="productId" />
+      <ApiList entityName="products" entityNameId="productId" /> */}
     </>
   );
 }

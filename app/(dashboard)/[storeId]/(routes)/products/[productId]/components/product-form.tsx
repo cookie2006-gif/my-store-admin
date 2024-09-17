@@ -15,6 +15,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import {
   Select,
   SelectContent,
@@ -23,7 +24,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
-import { Category, Cuisine, Kitchen, Product, Size } from "@/types-db";
+import { Category, Origin, Product, Size } from "@/types-db";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
 import { Trash } from "lucide-react";
@@ -37,8 +38,7 @@ interface ProductFormProps {
   initialData: Product;
   categories: Category[];
   sizes: Size[];
-  kitchens: Kitchen[];
-  cuisines: Cuisine[];
+  origins: Origin[];
 }
 
 const formSchema = z.object({
@@ -49,15 +49,14 @@ const formSchema = z.object({
   isArchived: z.boolean().default(false).optional(),
   category: z.string().min(1),
   size: z.string().optional(),
-  kitchen: z.string().optional(),
-  cuisine: z.string().optional(),
+  origin: z.string().optional(),
+  description: z.string().min(1),
 });
 
 export default function ProductForm({
   initialData,
   categories,
-  cuisines,
-  kitchens,
+  origins,
   sizes,
 }: ProductFormProps) {
   const form = useForm<z.infer<typeof formSchema>>({
@@ -69,8 +68,8 @@ export default function ProductForm({
       isFeatured: false,
       isArchived: false,
       category: "",
-      kitchen: "",
-      cuisine: "",
+      origin: "",
+      description: "",
       size: "",
     },
   });
@@ -244,6 +243,24 @@ export default function ProductForm({
 
             <FormField
               control={form.control}
+              name="description"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Description</FormLabel>
+                  <FormControl>
+                    <Textarea
+                      disabled={isLoading}
+                      placeholder="Product description"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
               name="size"
               render={({ field }) => (
                 <FormItem>
@@ -276,10 +293,10 @@ export default function ProductForm({
 
             <FormField
               control={form.control}
-              name="kitchen"
+              name="origin"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Kitchen</FormLabel>
+                  <FormLabel>Origin</FormLabel>
                   <Select
                     disabled={isLoading}
                     onValueChange={field.onChange}
@@ -290,14 +307,14 @@ export default function ProductForm({
                       <SelectTrigger>
                         <SelectValue
                           defaultValue={field.value}
-                          placeholder="Select a kitchen"
+                          placeholder="Select a origin"
                         />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      {kitchens.map((kitchen) => (
-                        <SelectItem key={kitchen.id} value={kitchen.name}>
-                          {kitchen.name}
+                      {origins.map((origin) => (
+                        <SelectItem key={origin.id} value={origin.name}>
+                          {origin.name}
                         </SelectItem>
                       ))}
                     </SelectContent>
@@ -305,38 +322,9 @@ export default function ProductForm({
                 </FormItem>
               )}
             />
-            <FormField
-              control={form.control}
-              name="cuisine"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Cuisine</FormLabel>
-                  <Select
-                    disabled={isLoading}
-                    onValueChange={field.onChange}
-                    value={field.value}
-                    defaultValue={field.value}
-                  >
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue
-                          defaultValue={field.value}
-                          placeholder="Select a cuisine"
-                        />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      {cuisines.map((cuisine) => (
-                        <SelectItem key={cuisine.id} value={cuisine.name}>
-                          {cuisine.name}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </FormItem>
-              )}
-            />
+          </div>
 
+          <div className="grid grid-cols-2 gap-8">
             <FormField
               control={form.control}
               name="isFeatured"
