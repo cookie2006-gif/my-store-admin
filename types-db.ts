@@ -33,6 +33,14 @@ export interface Size {
   updatedAt?: Timestamp;
 }
 
+export interface Origin {
+  id: string;
+  name: string;
+  value: string;
+  createdAt?: Timestamp;
+  updatedAt?: Timestamp;
+}
+
 export interface Kitchen {
   id: string;
   name: string;
@@ -60,9 +68,10 @@ export interface Product {
   isFeatured: boolean;
   isArchived: boolean;
   category: string;
-  kitchen: string;
+  origin: string;
   size: string;
-  cuisine: string;
+  description: string;
+  // cuisine: string;
   createdAt?: Timestamp;
   updatedAt?: Timestamp;
 }
