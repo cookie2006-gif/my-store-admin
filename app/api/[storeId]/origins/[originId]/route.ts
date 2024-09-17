@@ -1,5 +1,5 @@
 import { db } from "@/lib/firebase";
-import { Kitchen } from "@/types-db";
+import { Origin } from "@/types-db";
 import { auth } from "@clerk/nextjs/server";
 import {
   deleteDoc,
@@ -12,7 +12,7 @@ import { NextResponse } from "next/server";
 
 export const PATCH = async (
   req: Request,
-  { params }: { params: { storeId: string; kitchenId: string } }
+  { params }: { params: { storeId: string; originId: string } }
 ) => {
   try {
     const { userId } = auth();
@@ -23,11 +23,11 @@ export const PATCH = async (
     }
     const { name, value } = body;
     if (!name) {
-      return new NextResponse("Kitchen Name is missing!", { status: 400 });
+      return new NextResponse("Origin Name is missing!", { status: 400 });
     }
 
     if (!value) {
-      return new NextResponse("Kitchen Value is missing!", { status: 400 });
+      return new NextResponse("Origin Value is missing!", { status: 400 });
     }
     if (!params.storeId) {
       return new NextResponse("Store Id is missing", { status: 400 });
@@ -41,37 +41,37 @@ export const PATCH = async (
       }
     }
 
-    const kitchenRef = await getDoc(
-      doc(db, "stores", params.storeId, "kitchens", params.kitchenId)
+    const originRef = await getDoc(
+      doc(db, "stores", params.storeId, "origins", params.originId)
     );
-    if (kitchenRef.exists()) {
+    if (originRef.exists()) {
       await updateDoc(
-        doc(db, "stores", params.storeId, "kitchens", params.kitchenId),
+        doc(db, "stores", params.storeId, "origins", params.originId),
         {
-          ...kitchenRef.data(),
+          ...originRef.data(),
           name,
           value,
           updatedAt: serverTimestamp(),
         }
       );
     } else {
-      return new NextResponse("Kitchen Not Found", { status: 404 });
+      return new NextResponse("Origin Not Found", { status: 404 });
     }
 
-    const kitchen = (
-      await getDoc(doc(db, "stores", params.storeId, "kitchens", params.kitchenId))
-    ).data() as Kitchen;
+    const origin = (
+      await getDoc(doc(db, "stores", params.storeId, "origins", params.originId))
+    ).data() as Origin;
 
-    return NextResponse.json(kitchen);
+    return NextResponse.json(origin);
   } catch (error) {
-    console.log(`kitchens_PATCH:${error}`);
+    console.log(`origins_PATCH:${error}`);
     return new NextResponse("Internal Server Error", { status: 500 });
   }
 };
 
 export const DELETE = async (
   req: Request,
-  { params }: { params: { storeId: string; kitchenId: string } }
+  { params }: { params: { storeId: string; originId: string } }
 ) => {
   try {
     const { userId } = auth();
@@ -83,8 +83,8 @@ export const DELETE = async (
     if (!params.storeId) {
       return new NextResponse("Store Id is missing", { status: 400 });
     }
-    if (!params.kitchenId) {
-      return new NextResponse("Kitchen Id is missing", { status: 400 });
+    if (!params.originId) {
+      return new NextResponse("Origin Id is missing", { status: 400 });
     }
 
     const store = await getDoc(doc(db, "stores", params.storeId));
@@ -95,12 +95,12 @@ export const DELETE = async (
       }
     }
 
-    const kitchenRef = doc(db, "stores", params.storeId, "kitchens", params.kitchenId);
-    await deleteDoc(kitchenRef);
+    const originRef = doc(db, "stores", params.storeId, "origins", params.originId);
+    await deleteDoc(originRef);
 
-    return NextResponse.json({ msg: "Kitchen Deleted" });
+    return NextResponse.json({ msg: "Origin Deleted" });
   } catch (error) {
-    console.log(`KITCHEN_DELETE:${error}`);
+    console.log(`Origin_DELETE:${error}`);
     return new NextResponse("Internal Server Error", { status: 500 });
   }
 };

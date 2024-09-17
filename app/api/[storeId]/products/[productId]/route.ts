@@ -30,8 +30,8 @@ export const PATCH = async (
       isArchived,
       category,
       size,
-      kitchen,
-      cuisine,
+      origin,
+      description,
     } = body;
     if (!name) {
       return new NextResponse("Product Name is missing!", { status: 400 });
@@ -73,8 +73,9 @@ export const PATCH = async (
           isArchived,
           category,
           size,
-          kitchen,
-          cuisine,
+          origin,
+          // cuisine,
+          description,
           updatedAt: serverTimestamp(),
         }
       );

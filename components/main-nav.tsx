@@ -17,11 +17,11 @@ export default function MainNav({
       label: "Overview",
       active: pathname === `${params.storeId}`,
     },
-    {
-      href: `/${params.storeId}/billboards`,
-      label: "Billboards",
-      active: pathname === `${params.storeId}/billboards`,
-    },
+    // {
+    //   href: `/${params.storeId}/billboards`,
+    //   label: "Billboards",
+    //   active: pathname === `${params.storeId}/billboards`,
+    // },
     {
       href: `/${params.storeId}/categories`,
       label: "Categories",
@@ -33,15 +33,15 @@ export default function MainNav({
       active: pathname === `${params.storeId}/sizes`,
     },
     {
-      href: `/${params.storeId}/kitchens`,
-      label: "Kitchens",
-      active: pathname === `${params.storeId}/kitchens`,
+      href: `/${params.storeId}/origins`,
+      label: "Origins",
+      active: pathname === `${params.storeId}/origins`,
     },
-    {
-      href: `/${params.storeId}/cuisines`,
-      label: "Cuisines",
-      active: pathname === `${params.storeId}/cuisines`,
-    },
+    // {
+    //   href: `/${params.storeId}/cuisines`,
+    //   label: "Cuisines",
+    //   active: pathname === `${params.storeId}/cuisines`,
+    // },
     {
       href: `/${params.storeId}/products`,
       label: "Products",

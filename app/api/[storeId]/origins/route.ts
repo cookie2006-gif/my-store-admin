@@ -1,5 +1,5 @@
 import { db } from "@/lib/firebase";
-import { Kitchen } from "@/types-db";
+import { Origin } from "@/types-db";
 import { auth } from "@clerk/nextjs/server";
 import {
   addDoc,
@@ -25,11 +25,11 @@ export const POST = async (
     }
     const { name, value } = body;
     if (!name) {
-      return new NextResponse("Kitchen Name is missing!", { status: 400 });
+      return new NextResponse("Origin Name is missing!", { status: 400 });
     }
 
     if (!value) {
-      return new NextResponse("Kitchen Value is missing!", { status: 400 });
+      return new NextResponse("Origin Value is missing!", { status: 400 });
     }
     if (!params.storeId) {
       return new NextResponse("Store Id is missing", { status: 400 });
@@ -43,27 +43,27 @@ export const POST = async (
       }
     }
 
-    const kitchenData = {
+    const originData = {
       name,
       value,
       createdAt: serverTimestamp(),
     };
 
-    const kitchenRef = await addDoc(
-      collection(db, "stores", params.storeId, "kitchens"),
-      kitchenData
+    const originRef = await addDoc(
+      collection(db, "stores", params.storeId, "origins"),
+      originData
     );
 
-    const id = kitchenRef.id;
-    await updateDoc(doc(db, "stores", params.storeId, "kitchens", id), {
-      ...kitchenData,
+    const id = originRef.id;
+    await updateDoc(doc(db, "stores", params.storeId, "origins", id), {
+      ...originData,
       id,
       updatedAt: serverTimestamp(),
     });
 
-    return NextResponse.json({ id, ...kitchenData });
+    return NextResponse.json({ id, ...originData });
   } catch (error) {
-    console.log(`KITCHENS_POST:${error}`);
+    console.log(`ORIGINS_POST:${error}`);
     return new NextResponse("Internal Server Error", { status: 500 });
   }
 };
@@ -77,12 +77,12 @@ export const GET = async (
       return new NextResponse("Store Id is missing", { status: 400 });
     }
 
-    const kitchensData = (
-      await getDocs(collection(doc(db, "stores", params.storeId), "kitchens"))
-    ).docs.map((doc) => doc.data() as Kitchen[]);
-    return NextResponse.json(kitchensData);
+    const originsData = (
+      await getDocs(collection(doc(db, "stores", params.storeId), "origins"))
+    ).docs.map((doc) => doc.data() as Origin[]);
+    return NextResponse.json(originsData);
   } catch (error) {
-    console.log(`KITCHENS_GET:${error}`);
+    console.log(`Origins_GET:${error}`);
     return new NextResponse("Internal Server Error", { status: 500 });
   }
 };

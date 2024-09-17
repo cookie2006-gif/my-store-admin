@@ -87,12 +87,12 @@ export const DELETE = async (
       await deleteDoc(sizeDoc.ref);
     });
 
-    // kitchens
-    const kitchensQuerySnapShot = await getDocs(
-      collection(db, `stores/${params.storeId}/kitchens`)
+    // Origins
+    const originsQuerySnapShot = await getDocs(
+      collection(db, `stores/${params.storeId}/origins`)
     );
-    kitchensQuerySnapShot.forEach(async (kitchenDoc) => {
-      await deleteDoc(kitchenDoc.ref);
+    originsQuerySnapShot.forEach(async (originDoc) => {
+      await deleteDoc(originDoc.ref);
     });
     // cuisines
     const cuisinesQuerySnapShot = await getDocs(

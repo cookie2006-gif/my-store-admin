@@ -34,8 +34,8 @@ export const POST = async (
       isArchived,
       category,
       size,
-      kitchen,
-      cuisine,
+      origin,
+      description,
     } = body;
     if (!name) {
       return new NextResponse("Product Name is missing!", { status: 400 });
@@ -70,8 +70,8 @@ export const POST = async (
       isArchived,
       category,
       size,
-      kitchen,
-      cuisine,
+      origin,
+      description,
       createdAt: serverTimestamp(),
     };
 
@@ -122,16 +122,16 @@ export const GET = async (
         where("category", "==", searchParams.get("category"))
       );
     }
-    if (searchParams.has("kitchen")) {
+    if (searchParams.has("origin")) {
       queryConstraints.push(
-        where("kitchen", "==", searchParams.get("kitchen"))
+        where("origin", "==", searchParams.get("origin"))
       );
     }
-    if (searchParams.has("cuisine")) {
-      queryConstraints.push(
-        where("cuisine", "==", searchParams.get("cuisine"))
-      );
-    }
+    // if (searchParams.has("cuisine")) {
+    //   queryConstraints.push(
+    //     where("cuisine", "==", searchParams.get("cuisine"))
+    //   );
+    // }
     if (searchParams.has("isFeatured")) {
       queryConstraints.push(
         where(
